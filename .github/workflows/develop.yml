@@ -20,10 +20,11 @@ jobs:
           echo "CURRENT_DATE=$(TZ=Asia/Ho_Chi_Minh date +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_OUTPUT
           if [ "${{ github.triggering_actor }}" == "skydark3004" ]; then echo "SKYPE_ID=live:.cid.34900d2be708c9d2" >> $GITHUB_OUTPUT
           else
-          echo "Not found user"
+          echo echo "SKYPE_ID=NOT_FOUND" >> $GITHUB_OUTPUT
           fi
 
       - name: Create File Text
+        if: ${{ steps.EXPORT_VARIABLE.outputs.SKYPE_ID != 'NOT_FOUND' }}
         run: |
           cat <<EOF > msg.txt
           - Branch: ${{ steps.EXPORT_VARIABLE.outputs.BRANCH }}
@@ -34,6 +35,7 @@ jobs:
           EOF
 
       - name: Send skype
+        if: ${{ steps.EXPORT_VARIABLE.outputs.SKYPE_ID != 'NOT_FOUND' }}
         uses: Eloco/docker-action-send-skype@v2
         with:
           skype_username: bots0000002@gmail.com
