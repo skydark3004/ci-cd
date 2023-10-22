@@ -15,6 +15,12 @@ jobs:
       - name: Set and Retrieve Github ENV variables
         run: |
           echo "The email of the pusher: ${{ github.event.pusher.email }}"
+          echo "${{ github.actor }}"
+          echo "${{ github.triggering_actor }}"
+          echo "${{ github.event.comment.user.login }}"
+
+
+
       - name: get email
         id: test
         uses: evvanErb/get-github-email-by-username-action@v1.25
