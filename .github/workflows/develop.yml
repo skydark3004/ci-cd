@@ -17,9 +17,8 @@ jobs:
         id: GET_BRANCH
         shell: bash
         run: |
-          timedatectl set-timezone Asia/Ho_Chi_Minh
           echo "BRANCH=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
-          echo "CURRENT_DATE=$(date +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_OUTPUT
+          echo "CURRENT_DATE=$(TZ=Asia/Ho_Chi_Minh date)" >> $GITHUB_OUTPUT
 
       - name: Get code
         uses: actions/checkout@v3
