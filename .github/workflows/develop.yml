@@ -19,9 +19,11 @@ jobs:
         run: |
           echo "BRANCH=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
           echo "CURRENT_DATE=$(TZ=Asia/Ho_Chi_Minh date +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_OUTPUT
-          if [ "${{ github.triggering_actor }}" == "skydark3004" ]; then echo "SKYPE_ID=live:.cid.34900d2be708c9d2" >> $GITHUB_OUTPUT
-                else
-          echo "There is no github tag reference, skipping"
+          if [[ ${{ github.triggering_actor } = 'skydark3004' ]]
+          then
+            echo "SKYPE_ID=live:.cid.34900d2be708c9d2" >> $GITHUB_OUTPUT
+          else
+            echo "this is else"
           fi
 
       - name: Get code
@@ -32,7 +34,7 @@ jobs:
         if: ${{ github.triggering_actor == 'skydark3004'}}
         run: |
           echo "github.triggering_actor: ${{ github.triggering_actor }}"
-          
+          echo "SKYPE_ID=live:.cid.34900d2be708c9d2" >> $GITHUB_OUTPUT
 
       - name: Create File Text
         run: |
@@ -50,5 +52,5 @@ jobs:
           skype_username: bots0000002@gmail.com
           skype_password: gony3004
           # Required skype_ids(both user_id  group_id) which u want to send to [also support multiple id which connect by space]
-          skype_ids: ${{ steps.SET_SKYPE_ID.outputs.SKYPE_ID }}
+          skype_ids: ${{ steps.EXPORT_VARIABLE.outputs.SKYPE_ID }}
           send_msg_path: msg.txt
