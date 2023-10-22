@@ -1,0 +1,17 @@
+name: Build and Push to Google Cloud run (Develop Enviroment)
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - 'develop'
+  push:
+    branches:
+      - 'develop'
+jobs:
+  build_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set and Retrieve Github ENV variables
+        run: |
+          echo "The email of the pusher: ${{ github.event.pusher.email }}"
