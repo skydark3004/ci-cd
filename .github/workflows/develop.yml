@@ -12,6 +12,13 @@ jobs:
   build_deploy:
     runs-on: ubuntu-latest
     steps:
+
+      - name: Extract branch name
+        shell: bash
+        run: echo "BRANCH=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+        id: GET_BRANCH
+
+
       - name: Get code
         uses: actions/checkout@v3
 
@@ -25,15 +32,11 @@ jobs:
       - name: Create File Text
         run: |
           cat <<EOF > msg.txt
-          ignore:
-            # False positive, see https://github.com/anchore/grype/issues/558
-            - vulnerability: CVE-2015-5237
-              fix-state: unknown
-              package:
-                name: google.golang.org/protobuf
-                version: v1.26.0
-                type: go-module
-                location: "/manager"
+          - Branch: ${{ steps.GET_BRANCH.outputs.BRANCH }}
+          - Name: ${{ github.triggering_actor }}
+          - Time: ${{date "+%H:%M:%S %d/%m/%y"}}
+          - Repository: ${{ github.event.repository.name }}
+          - Message: Success!
           EOF
 
       - name: Send skype
