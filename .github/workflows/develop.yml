@@ -18,7 +18,7 @@ jobs:
         shell: bash
         run: |
           echo "BRANCH=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
-          echo "CURRENT_DATE=$(TZ=Asia/Ho_Chi_Minh date)" >> $GITHUB_OUTPUT
+          echo "CURRENT_DATE=$(TZ=Asia/Ho_Chi_Minh date +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_OUTPUT
 
       - name: Get code
         uses: actions/checkout@v3
@@ -36,7 +36,6 @@ jobs:
           - Branch: ${{ steps.GET_BRANCH.outputs.BRANCH }}
           - User: ${{ github.triggering_actor }}
           - Time: ${{ steps.GET_BRANCH.outputs.CURRENT_DATE }}
-          - TimeStamp: ${{ steps.time.outputs.time }}
           - Repository: ${{ github.event.repository.name }}
           - Message: ${{ github.event.head_commit.message }}
           EOF
