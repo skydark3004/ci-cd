@@ -20,7 +20,7 @@ jobs:
           echo "${{github.event.head_commit.message}}"
           echo "BRANCH=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
           echo "CURRENT_DATE=$(TZ=Asia/Ho_Chi_Minh date +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_OUTPUT
-          if [ "${{ github.triggering_actor }}" == "skydark30041" ]; then echo "SKYPE_ID=live:.cid.34900d2be708c9d2" >> $GITHUB_OUTPUT
+          if [ "${{ github.triggering_actor }}" == "skydark3004" ]; then echo "SKYPE_ID=live:.cid.34900d2be708c9d2" >> $GITHUB_OUTPUT
           else
           echo "SKYPE_ID=NOT_FOUND" >> $GITHUB_OUTPUT
           fi
