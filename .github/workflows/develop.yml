@@ -12,17 +12,12 @@ jobs:
   build_deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Get Time
-        id: time
-        uses: nanzm/get-time-action@master
-        with:
-          timeZone: UTC+7
-          format: 'DD-MM-YYYY HH-mm-ss'
 
       - name: Extract branch name
         id: GET_BRANCH
         shell: bash
         run: |
+          timedatectl set-timezone Asia/Ho_Chi_Minh
           echo "BRANCH=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
           echo "CURRENT_DATE=$(date +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_OUTPUT
 
