@@ -2,9 +2,6 @@ name: Build and Push to Google Cloud run (Develop Enviroment)
 
 on:
   workflow_dispatch:
-#  pull_request:
-#    branches:
-#      - 'main'
   push:
     branches:
       - 'main'
@@ -45,3 +42,11 @@ jobs:
           # Required skype_ids(both user_id  group_id) which u want to send to [also support multiple id which connect by space]
           skype_ids: ${{ steps.EXPORT_VARIABLE.outputs.SKYPE_ID }}
           send_msg_path: msg.txt
+
+  test_job:
+    needs: send_message_to_skype
+    runs-on: ubuntu-latest
+    steps: 
+    - name: test
+      run: |
+          echo "test"
