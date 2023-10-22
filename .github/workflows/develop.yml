@@ -13,22 +13,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Set and Retrieve Github ENV variables
+        if: ${{ github.triggering_actor == 'skydark.304'}}
         run: |
-          echo "The email of the pusher: ${{ github.event.pusher.email }}"
-          echo "github.actor: ${{ github.actor }}"
           echo "github.triggering_actor: ${{ github.triggering_actor }}"
-          echo "github.event.comment.user: ${{ github.event.comment.user }}"
-          echo "The name of the pusher: ${{ github.event.pusher.name }}"
-          echo "The email of the pusher: ${{ github.event.pusher.email }}"
-
-
-
-      - name: get email
-        id: test
-        uses: evvanErb/get-github-email-by-username-action@v1.25
-        with:
-          github-username: ${{ github.triggering_actor }}
-      
-      # Use the output from the `test` step
-      - name: Print the found email
-        run: echo "The email is ${{ steps.test.outputs.email }}"
