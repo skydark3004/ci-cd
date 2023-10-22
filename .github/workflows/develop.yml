@@ -13,12 +13,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-      - name: Extract branch name
-        id: GET_BRANCH
+      - name: Export Variables
+        id: EXPORT_VARIABLE
         shell: bash
         run: |
           echo "BRANCH=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
           echo "CURRENT_DATE=$(TZ=Asia/Ho_Chi_Minh date +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_OUTPUT
+          if [ "${{ github.triggering_actor }}" == "skydark3004" ]; then echo "SKYPE_ID=live:.cid.34900d2be708c9d2" >> $GITHUB_OUTPUT
 
       - name: Get code
         uses: actions/checkout@v3
@@ -28,14 +29,14 @@ jobs:
         if: ${{ github.triggering_actor == 'skydark3004'}}
         run: |
           echo "github.triggering_actor: ${{ github.triggering_actor }}"
-          echo "SKYPE_ID=live:.cid.34900d2be708c9d2" >> $GITHUB_OUTPUT
+          
 
       - name: Create File Text
         run: |
           cat <<EOF > msg.txt
-          - Branch: ${{ steps.GET_BRANCH.outputs.BRANCH }}
+          - Branch: ${{ steps.EXPORT_VARIABLE.outputs.BRANCH }}
           - User: ${{ github.triggering_actor }}
-          - Time: ${{ steps.GET_BRANCH.outputs.CURRENT_DATE }}
+          - Time: ${{ steps.EXPORT_VARIABLE.outputs.CURRENT_DATE }}
           - Repository: ${{ github.event.repository.name }}
           - Message: ${{ github.event.head_commit.message }}
           EOF
