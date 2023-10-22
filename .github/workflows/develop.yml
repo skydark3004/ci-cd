@@ -34,7 +34,7 @@ jobs:
           cat <<EOF > msg.txt
           - Branch: ${{ steps.GET_BRANCH.outputs.BRANCH }}
           - Name: ${{ github.triggering_actor }}
-          - Time: ${{date "+%H:%M:%S %d/%m/%y"}}
+          - Time: ${{date}} "+%H:%M:%S %d/%m/%y"
           - Repository: ${{ github.event.repository.name }}
           - Message: Success!
           EOF
