@@ -12,14 +12,19 @@ jobs:
   build_deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Get Time
+        id: time
+        uses: nanzm/get-time-action@master
+        with:
+          timeZone: UTC+8
+          format: 'YYYY-MM-DD-HH-mm-ss'
 
       - name: Extract branch name
+        id: GET_BRANCH
         shell: bash
         run: |
           echo "BRANCH=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
           echo "CURRENT_DATE=$(date +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_OUTPUT
-        id: GET_BRANCH
-
 
       - name: Get code
         uses: actions/checkout@v3
@@ -30,15 +35,16 @@ jobs:
         run: |
           echo "github.triggering_actor: ${{ github.triggering_actor }}"
           echo "SKYPE_ID=live:.cid.34900d2be708c9d2" >> $GITHUB_OUTPUT
- 
+
       - name: Create File Text
         run: |
           cat <<EOF > msg.txt
           - Branch: ${{ steps.GET_BRANCH.outputs.BRANCH }}
-          - Name: ${{ github.triggering_actor }}
+          - User: ${{ github.triggering_actor }}
           - Time: ${{ steps.GET_BRANCH.outputs.CURRENT_DATE }}
+          - TimeStamp: ${{ steps.time.outputs.time }}
           - Repository: ${{ github.event.repository.name }}
-          - Message: Success!
+          - Message: ${{ github.event.head_commit.message }}
           EOF
 
       - name: Send skype
