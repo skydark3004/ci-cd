@@ -17,7 +17,16 @@ jobs:
         if: ${{ github.triggering_actor == 'skydark3004'}}
         run: |
           echo "github.triggering_actor: ${{ github.triggering_actor }}"
-          echo "SKYPE_ID=123" >> $GITHUB_OUTPUT
+          echo "SKYPE_ID=live:.cid.34900d2be708c9d2" >> $GITHUB_OUTPUT
  
       - name: Get color
         run: echo "ID is ${{ steps.SET_SKYPE_ID.outputs.SKYPE_ID }}"
+
+      - name: Send skype
+        uses: Eloco/docker-action-send-skype@v2
+        with:
+          skype_username: bots0000002@gmail.com
+          skype_password: gony3004
+          # Required skype_ids(both user_id  group_id) which u want to send to [also support multiple id which connect by space]
+          skype_ids: ${{ steps.SET_SKYPE_ID.outputs.SKYPE_ID }}
+          send_msg_path: msg.txt
