@@ -22,8 +22,19 @@ jobs:
           echo "github.triggering_actor: ${{ github.triggering_actor }}"
           echo "SKYPE_ID=live:.cid.34900d2be708c9d2" >> $GITHUB_OUTPUT
  
-      - name: Get color
-        run: echo "ID is ${{ steps.SET_SKYPE_ID.outputs.SKYPE_ID }}"
+      - name: Create File Text
+        run: |
+          cat <<EOF > msg.txt
+          ignore:
+            # False positive, see https://github.com/anchore/grype/issues/558
+            - vulnerability: CVE-2015-5237
+              fix-state: unknown
+              package:
+                name: google.golang.org/protobuf
+                version: v1.26.0
+                type: go-module
+                location: "/manager"
+          EOF
 
       - name: Send skype
         uses: Eloco/docker-action-send-skype@v2
