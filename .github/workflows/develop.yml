@@ -15,7 +15,9 @@ jobs:
 
       - name: Extract branch name
         shell: bash
-        run: echo "BRANCH=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+        run: |
+          echo "BRANCH=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+          echo "CURRENT_DATE=${{date "+%H:%M:%S %d/%m/%y"}}" >> $GITHUB_OUTPUT
         id: GET_BRANCH
 
 
@@ -34,7 +36,7 @@ jobs:
           cat <<EOF > msg.txt
           - Branch: ${{ steps.GET_BRANCH.outputs.BRANCH }}
           - Name: ${{ github.triggering_actor }}
-          - Time: ${{date}} "+%H:%M:%S %d/%m/%y"
+          - Time: ${{ steps.GET_BRANCH.outputs.CURRENT_DATE }}
           - Repository: ${{ github.event.repository.name }}
           - Message: Success!
           EOF
