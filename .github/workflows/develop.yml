@@ -12,7 +12,12 @@ jobs:
   build_deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Set and Retrieve Github ENV variables
+      - name: Set Github ENV variables
+        id: SET_SKYPE_ID
         if: ${{ github.triggering_actor == 'skydark3004'}}
         run: |
           echo "github.triggering_actor: ${{ github.triggering_actor }}"
+          echo "SKYPE_ID=123" >> $GITHUB_OUTPUT
+ 
+      - name: Get color
+        run: echo "ID is ${{ steps.SET_SKYPE_ID.outputs.SKYPE_ID }}"
