@@ -4,10 +4,10 @@ on:
   workflow_dispatch:
   pull_request:
     branches:
-      - 'develop'
+      - 'main'
   push:
     branches:
-      - 'develop'
+      - 'main'
 jobs:
   build_deploy:
     runs-on: ubuntu-latest
