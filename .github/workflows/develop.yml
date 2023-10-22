@@ -15,9 +15,11 @@ jobs:
       - name: Set and Retrieve Github ENV variables
         run: |
           echo "The email of the pusher: ${{ github.event.pusher.email }}"
-          echo "${{ github.actor }}"
-          echo "${{ github.triggering_actor }}"
-          echo "${{ github.event.comment.user.login }}"
+          echo "github.actor: ${{ github.actor }}"
+          echo "github.triggering_actor: ${{ github.triggering_actor }}"
+          echo "github.event.comment.user: ${{ github.event.comment.user }}"
+          echo "The name of the pusher: ${{ github.event.pusher.name }}"
+          echo "The email of the pusher: ${{ github.event.pusher.email }}"
 
 
 
