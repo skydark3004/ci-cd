@@ -16,8 +16,8 @@ jobs:
         id: time
         uses: nanzm/get-time-action@master
         with:
-          timeZone: UTC+8
-          format: 'YYYY-MM-DD-HH-mm-ss'
+          timeZone: UTC+7
+          format: 'DD-MM-YYYY HH-mm-ss'
 
       - name: Extract branch name
         id: GET_BRANCH
