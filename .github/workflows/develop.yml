@@ -23,9 +23,6 @@ jobs:
           echo "Not found user"
           fi
 
-      - name: Get code
-        uses: actions/checkout@v3
-
       - name: Create File Text
         run: |
           cat <<EOF > msg.txt
@@ -44,11 +41,3 @@ jobs:
           # Required skype_ids(both user_id  group_id) which u want to send to [also support multiple id which connect by space]
           skype_ids: ${{ steps.EXPORT_VARIABLE.outputs.SKYPE_ID }}
           send_msg_path: msg.txt
-
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Export Variables
-        shell: bash
-        run: |
-          echo "hello world"
